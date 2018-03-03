@@ -31,6 +31,10 @@ Cervejaria.ComboCidade = (function() {
 	ComboCidade.prototype.iniciar = function() {
 		reset.call(this);
 		this.comboEstado.on('alterado', onEstadoAlterado.bind(this));
+		var codigoEstado = this.comboEstado.combo.val();
+		if(codigoEstado){
+			onEstadoAlterado.call(this, undefined, codigoEstado);
+		}
 	}
 	
 	function onEstadoAlterado(evento, codigoEstado) {
@@ -52,7 +56,7 @@ Cervejaria.ComboCidade = (function() {
 	function onBuscarCidadesFinalizado(cidades) {
 		var options = [];
 		cidades.forEach(function(cidade) {
-			options.push('<option value"' + cidade.codigo + '">' + cidade.nome + '</option>');
+			options.push('<option value="' + cidade.codigo + '">' + cidade.nome + '</option>');
 		});
 		
 		this.combo.html(options.join(''));
