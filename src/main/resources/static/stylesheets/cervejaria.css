@@ -66,6 +66,11 @@
 	width: 50px
 }
 
+.table-col-acoes{
+	width: 80px;
+}
+
+/* tabela cervejas */
 .table-cervejas-col-sku {
 	width: 90px;
 	text-align: center;
@@ -96,7 +101,29 @@
 	width: 80px;
 }
 
+/* tabela estilo */
 .table-estilo-col-cod {
 	width: 90px;
+	text-align: center;
+}
+
+/* tabela clientes */
+.table-cliente-col-nome{
+	
+}
+.table-estilo-col-cod{
+	width: 80px;
+}
+
+.table-cliente-col-cpfoucnpj{
+	width: 140px;
+	text-align: center;
+}
+.table-cliente-col-telefone{
+	width: 140px;
+	text-align: center;
+}
+.table-cliente-col-tipopessoa{
+	width: 120px;
 	text-align: center;
 }
