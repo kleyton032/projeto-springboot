@@ -14,6 +14,7 @@ import com.sistema.cervejaria.model.Cliente;
 import com.sistema.cervejaria.model.TipoPessoa;
 import com.sistema.cervejaria.repository.Estados;
 import com.sistema.cervejaria.service.CadastroClienteService;
+import com.sistema.cervejaria.service.exception.ClienteCpfouCnpjJaCadastradoException;
 
 @Controller
 @RequestMapping("/clientes")
@@ -40,17 +41,26 @@ public class ClientesController {
 		return mv;
 	}
 	
-	//salvando cliente
+	// salvando cliente
 	@PostMapping("/novo")
-	public ModelAndView cadastrar(@Valid Cliente cliente, BindingResult result,
+	public ModelAndView cadastrar(@Valid Cliente cliente, BindingResult result, 
 			RedirectAttributes attributes) {
 		if (result.hasErrors()) {
 			return novo(cliente);
 		}
-		cadastroClienteService.salvar(cliente);
+		try {
+			cadastroClienteService.salvar(cliente);
+
+		} catch (ClienteCpfouCnpjJaCadastradoException e) {
+			//passando o field do valor para rejeição caso já tenha cadastrado
+			result.rejectValue("cpfOuCnpj", e.getMessage(), e.getMessage());
+			//retornando caso a rejeição seja verdadeira
+			return novo(cliente);
+			}
+
 		attributes.addFlashAttribute("mensagem", "Cliente salvo com sucesso!");
 		return new ModelAndView("redirect:/clientes/novo");
 
 	}
-	
+
 }

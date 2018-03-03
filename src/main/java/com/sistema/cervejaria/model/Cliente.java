@@ -63,7 +63,7 @@ public class Cliente implements Serializable {
 	//salvar cpf no banco de dados sem formatação do input
 	@PrePersist @PreUpdate
 	private void prePersistPreUpdate() {
-		this.cpfOuCnpj = this.cpfOuCnpj.replaceAll("\\.|-|/", "");
+		this.cpfOuCnpj = TipoPessoa.removerFormtatacaoCpfOuCnpj(this.cpfOuCnpj);
 	}
 	
 	public Long getCodigo() {
@@ -120,6 +120,10 @@ public class Cliente implements Serializable {
 
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
+	}
+	
+	public String getCpfOuCnpjSemFormatacao() {
+		return TipoPessoa.removerFormtatacaoCpfOuCnpj(this.cpfOuCnpj);
 	}
 
 	@Override

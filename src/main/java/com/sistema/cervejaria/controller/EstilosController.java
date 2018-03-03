@@ -52,7 +52,9 @@ public class EstilosController {
 			// salvando no banco de dados o estilo...
 			cadastroEstiloService.salvar(estilo);
 		} catch (NomeEstiloJaCadastroException e) {
+			//passando o field do valor para rejeição caso já tenha cadastrado
 			result.rejectValue("nome", e.getMessage(), e.getMessage());
+			//retornando caso a rejeição seja verdadeira
 			return novo(estilo);
 
 		}
