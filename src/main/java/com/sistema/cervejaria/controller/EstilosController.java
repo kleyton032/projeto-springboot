@@ -6,15 +6,11 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.sistema.cervejaria.controller.page.PageWrapper;
@@ -29,37 +25,44 @@ import com.sistema.cervejaria.service.exception.NomeEstiloJaCadastroException;
 @RequestMapping("/estilos")
 public class EstilosController {
 	
+	//injetando serviço de estilo
 	@Autowired
 	private CadastroEstiloService cadastroEstiloService;
 	
+	//injetando repositório de estilo
 	@Autowired
 	private Estilos estilos;
 	
+	//carrega a página de cadastro estilo
 	@RequestMapping("/novo")
 	public ModelAndView novo(Estilo estilo) {
 		ModelAndView mv = new ModelAndView("estilo/CadastroEstilo");
 		return mv;
 	}
 	
+	//método para cadastrar estilo no bando de dados
 	@RequestMapping(value = "/novo", method = RequestMethod.POST)
-	public ModelAndView cadastrar(@Valid Estilo estilo, BindingResult result, RedirectAttributes attributes) {
-		if(result.hasErrors()) {
+	public ModelAndView cadastrar(@Valid Estilo estilo, BindingResult result, 
+			RedirectAttributes attributes) {
+		if (result.hasErrors()) {
 			return novo(estilo);
 		}
-		
+
 		try {
-		//salvando no banco de dados o estilo...
-		cadastroEstiloService.salvar(estilo);
-		}catch (NomeEstiloJaCadastroException e){
+			// salvando no banco de dados o estilo...
+			cadastroEstiloService.salvar(estilo);
+		} catch (NomeEstiloJaCadastroException e) {
 			result.rejectValue("nome", e.getMessage(), e.getMessage());
 			return novo(estilo);
-			
+
 		}
 		attributes.addFlashAttribute("mensagem", "Estilo salvo com sucesso");
 		return new ModelAndView("redirect:/estilos/novo");
-		
+
 	}
 	
+	/*
+	//método para cadastro rápido de estilo - *sem funcionar
 	@RequestMapping(value = "/estilos", method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE })
 	public @ResponseBody ResponseEntity<?> salvar(@RequestBody @Valid Estilo estilo, BindingResult result) {
 		if (result.hasErrors()) {
@@ -74,7 +77,9 @@ public class EstilosController {
 		
 		return ResponseEntity.ok(estilo);
 	}
+	*/
 	
+	//método para pesquisar estilo utilizando a classe PageWrapper
 	@GetMapping
 	public ModelAndView pesquisar(EstiloFilter estiloFilter, BindingResult result, @PageableDefault(size=3) Pageable pageable
 			, HttpServletRequest httpServletRequest) {

@@ -16,6 +16,7 @@ import org.springframework.util.StringUtils;
 import com.sistema.cervejaria.model.Estilo;
 import com.sistema.cervejaria.repository.filter.EstiloFilter;
 
+//classe para criação própria de queries, sem uso dos métodos da classe JPArepository
 public class EstilosImpl implements EstilosQueries {
 
 	@PersistenceContext
@@ -47,6 +48,7 @@ public class EstilosImpl implements EstilosQueries {
 		return (Long) criteria.uniqueResult();
 	}
 
+	//filtro pesquisa estilo
 	private void adicionarFiltro(EstiloFilter estiloFiltro, Criteria criteria) {
 		if (estiloFiltro != null) {
 			if (!StringUtils.isEmpty(estiloFiltro.getCodigo())) {

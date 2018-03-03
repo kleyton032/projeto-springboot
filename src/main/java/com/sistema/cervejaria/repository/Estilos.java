@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.sistema.cervejaria.model.Estilo;
 import com.sistema.cervejaria.repository.helper.estilo.EstilosQueries;
 
+
+//repositório estilo
 @Repository
 public interface Estilos extends JpaRepository<Estilo, Long>, EstilosQueries{
 

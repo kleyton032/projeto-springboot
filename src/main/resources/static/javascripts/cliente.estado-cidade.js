@@ -26,18 +26,24 @@ Cervejaria.ComboCidade = (function() {
 		this.comboEstado = comboEstado;
 		this.combo = $('#cidade');
 		this.imgLoading = $('.js-img-loading');
+		this.inputCidadeSelecionada = $('#codigoCidadeSelecionada');
 	}
 	
 	ComboCidade.prototype.iniciar = function() {
 		reset.call(this);
 		this.comboEstado.on('alterado', onEstadoAlterado.bind(this));
 		var codigoEstado = this.comboEstado.combo.val();
-		if(codigoEstado){
-			onEstadoAlterado.call(this, undefined, codigoEstado);
-		}
+		inicializarCidades.call(this, codigoEstado);
+	
 	}
 	
 	function onEstadoAlterado(evento, codigoEstado) {
+		this.inputCidadeSelecionada.val();
+		inicializarCidades.call(this, codigoEstado);
+	}
+	
+	function inicializarCidades(codigoEstado){
+		
 		if (codigoEstado) {
 			var resposta = $.ajax({
 				url: this.combo.data('url'),
@@ -51,6 +57,7 @@ Cervejaria.ComboCidade = (function() {
 		} else {
 			reset.call(this);
 		}
+		
 	}
 	
 	function onBuscarCidadesFinalizado(cidades) {
@@ -61,6 +68,11 @@ Cervejaria.ComboCidade = (function() {
 		
 		this.combo.html(options.join(''));
 		this.combo.removeAttr('disabled');
+		
+		var codigoCidadeSelecionada = this.inputCidadeSelecionada.val();
+		if(codigoCidadeSelecionada){
+			this.combo.val(codigoCidadeSelecionada);
+		}
 	}
 	
 	function reset() {

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.sistema.cervejaria.model.Cerveja;
 import com.sistema.cervejaria.repository.helper.cerveja.CervejasQueries;
 
+// repositório cervejas
 @Repository
 public interface Cervejas extends JpaRepository<Cerveja, Long>, CervejasQueries {
 

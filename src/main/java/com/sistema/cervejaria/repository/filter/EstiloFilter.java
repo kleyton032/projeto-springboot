@@ -1,5 +1,6 @@
 package com.sistema.cervejaria.repository.filter;
 
+//classe para filtro de estilo utilizado na tela de pesquisa de estilo
 public class EstiloFilter {
 
 	private Long codigo;

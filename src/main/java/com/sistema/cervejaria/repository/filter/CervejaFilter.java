@@ -6,6 +6,7 @@ import com.sistema.cervejaria.model.Estilo;
 import com.sistema.cervejaria.model.Origem;
 import com.sistema.cervejaria.model.Sabor;
 
+//classe para filtro de cerveja utilizado na tela de pesquisa de cerveja
 public class CervejaFilter {
 
 	private String sku;

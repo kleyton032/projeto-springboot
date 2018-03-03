@@ -17,7 +17,7 @@ public enum TipoPessoa {
 		this.descricao = descricao;
 		this.documento = documento;
 		this.mascara = mascara;
-		this.grupo =grupo; 
+		this.grupo = grupo; 
 	}
 
 	public String getDescricao() {

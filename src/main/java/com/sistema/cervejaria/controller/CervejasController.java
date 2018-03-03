@@ -28,15 +28,19 @@ import com.sistema.cervejaria.service.CadastroCervejaService;
 @RequestMapping("/cervejas")
 public class CervejasController {
 
+	//injetando repositório de estilos
 	@Autowired
 	private Estilos estilos;
 	
+	//injetando serviço de cerveja
 	@Autowired
 	private CadastroCervejaService cadastroCervejaService;
 	
+	//injetando repositório de cervejas
 	@Autowired
 	private Cervejas cervejas;
 	
+	//carrega a página de cadastro de cerveja
 	@RequestMapping("/novo")
 	public ModelAndView novo(Cerveja cerveja) {
 		ModelAndView mv = new ModelAndView("cerveja/CadastroCerveja");
@@ -46,6 +50,8 @@ public class CervejasController {
 		return mv;
 	}
 	
+	
+	//salva a cerveja
 	@RequestMapping(value = "/novo", method = RequestMethod.POST)
 	public ModelAndView cadastrar(@Valid Cerveja cerveja, BindingResult result, Model model, RedirectAttributes attributes) {
 		if (result.hasErrors()) {
@@ -57,6 +63,7 @@ public class CervejasController {
 		return new ModelAndView("redirect:/cervejas/novo");
 	}
 	
+	//pesquisa cerveja
 	@GetMapping
 	public ModelAndView pesquisar(CervejaFilter cervejaFilter, BindingResult result, @PageableDefault(size=3) Pageable pageable
 			, HttpServletRequest httpServletRequest) {

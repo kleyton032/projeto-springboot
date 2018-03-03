@@ -10,6 +10,7 @@ import javax.validation.OverridesAttribute;
 import javax.validation.Payload;
 import javax.validation.constraints.Pattern;
 
+//interface para criação de própria validação
 @Target({ ElementType.FIELD, ElementType.METHOD, ElementType.ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {})
