@@ -61,6 +61,12 @@
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
 		</dependency>
+		
+		<dependency>
+  		  <groupId>com.github.mxab.thymeleaf.extras</groupId>
+  		  <artifactId>thymeleaf-extras-data-attribute</artifactId>
+  		  <scope>compile</scope>
+		</dependency>
 			
 	</dependencies>
 

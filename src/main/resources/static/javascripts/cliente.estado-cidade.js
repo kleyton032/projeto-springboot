@@ -1,4 +1,4 @@
-var Cervejaria = Cervejaria ||{};
+var Cervejaria = Cervejaria || {};
 
 Cervejaria.ComboEstado = (function() {
 	
@@ -8,23 +8,70 @@ Cervejaria.ComboEstado = (function() {
 		this.on = this.emitter.on.bind(this.emitter);
 	}
 	
-	ComboCidade.prototype.iniciar = function() {
-		
+	ComboEstado.prototype.iniciar = function() {
+		this.combo.on('change', onEstadoAlterado.bind(this));
+	}
+	
+	function onEstadoAlterado() {
+		this.emitter.trigger('alterado', this.combo.val());
 	}
 	
 	return ComboEstado;
 	
-	
 }());
 
-Cervejaria.ComboCidade - (function() {
+Cervejaria.ComboCidade = (function() {
 	
-	function ComboCidade(ComboEstado) {
-		this.ComboEstado = ComboEstado;
+	function ComboCidade(comboEstado) {
+		this.comboEstado = comboEstado;
+		this.combo = $('#cidade');
+		this.imgLoading = $('.js-img-loading');
 	}
 	
 	ComboCidade.prototype.iniciar = function() {
+		reset.call(this);
+		this.comboEstado.on('alterado', onEstadoAlterado.bind(this));
+	}
+	
+	function onEstadoAlterado(evento, codigoEstado) {
+		if (codigoEstado) {
+			var resposta = $.ajax({
+				url: this.combo.data('url'),
+				method: 'GET',
+				contentType: 'application/json',
+				data: { 'estado': codigoEstado }, 
+				beforeSend: iniciarRequisicao.bind(this),
+				complete: finalizarRequisicao.bind(this)
+			});
+			resposta.done(onBuscarCidadesFinalizado.bind(this));
+		} else {
+			reset.call(this);
+		}
+	}
+	
+	function onBuscarCidadesFinalizado(cidades) {
+		var options = [];
+		cidades.forEach(function(cidade) {
+			options.push('<option value"' + cidade.codigo + '">' + cidade.nome + '</option>');
+		});
 		
+		this.combo.html(options.join(''));
+		this.combo.removeAttr('disabled');
+	}
+	
+	function reset() {
+		this.combo.html('<option value="">Selecione a cidade</option>');
+		this.combo.val('');
+		this.combo.attr('disabled', 'disabled');
+	}
+	
+	function iniciarRequisicao() {
+		reset.call(this);
+		this.imgLoading.show();
+	}
+	
+	function finalizarRequisicao() {
+		this.imgLoading.hide();
 	}
 	
 	return ComboCidade;
@@ -33,9 +80,11 @@ Cervejaria.ComboCidade - (function() {
 
 $(function() {
 	
-	var ComboEstado = new Cervejaria.ComboEstado();
-	ComboEstado.iniciar();
+	var comboEstado = new Cervejaria.ComboEstado();
+	comboEstado.iniciar();
 	
-	var ComboCidade = new Cervejaria.ComboCidade(ComboEstado);
-	ComboCidade.iniciar();
-})
+	var comboCidade = new Cervejaria.ComboCidade(comboEstado);
+	comboCidade.iniciar();
+	
+});
+
