@@ -8,10 +8,11 @@ import org.springframework.stereotype.Repository;
 
 import com.sistema.cervejaria.model.Cidade;
 import com.sistema.cervejaria.model.Estado;
+import com.sistema.cervejaria.repository.helper.cidade.CidadesQueires;
 
 //repositório cidades
 @Repository
-public interface Cidades extends JpaRepository<Cidade, Long>{
+public interface Cidades extends JpaRepository<Cidade, Long>, CidadesQueires{
 
 	//metedo para trazer a lista de cidades quando o estado é selecionado
 	public List<Cidade> findByEstadoCodigo(Long codigoEstado);

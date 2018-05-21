@@ -62,6 +62,13 @@
 			<artifactId>flyway-core</artifactId>
 		</dependency>
 		
+		<!-- Apache Bean Utils -->
+		<dependency>
+    		<groupId>commons-beanutils</groupId>
+    		<artifactId>commons-beanutils</artifactId>
+    		<scope>compile</scope>
+		</dependency>
+		
 		<dependency>
   		  <groupId>com.github.mxab.thymeleaf.extras</groupId>
   		  <artifactId>thymeleaf-extras-data-attribute</artifactId>

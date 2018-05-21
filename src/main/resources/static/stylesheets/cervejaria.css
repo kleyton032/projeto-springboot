@@ -115,6 +115,7 @@
 	width: 80px;
 }
 
+/* pesquisa cliente */
 .table-cliente-col-cpfoucnpj{
 	width: 140px;
 	text-align: center;
@@ -126,4 +127,13 @@
 .table-cliente-col-tipopessoa{
 	width: 120px;
 	text-align: center;
+}
+/*pesquisa cidades*/
+.table-cidades-col-nome {
+	
+}
+
+.table-cidades-col-estado {
+	width: 140px;
+	text-align: right;
 }
